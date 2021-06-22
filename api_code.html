@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        body{
+            background-image: url("angry2.jpg");
+          
+
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+       #main{
+         background-color: rgb(255, 255, 255);
+         height: 500px;
+         width: 700px;
+         margin-top: 150px;
+         margin-left: 365px;
+         border-radius: 50px;
+         
+       }
+       #quote{
+           text-align: center;
+           padding-top: 150px;
+           text-transform: capitalize;
+           font-weight: 2000;
+           font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+           color:greenyellow;
+       }
+       #btn{
+           color: white;
+           background-color: orange;
+           border-radius: 10px;
+           margin-left: 230px;
+           height: 30px;
+       }
+       #button_2{
+           color: white;
+           background-color: rgb(0, 81, 255);
+           border-radius: 10px;
+           height: 30px;
+           
+       }
+       #author {
+           padding-bottom: 100px;
+            text-align: center;
+            
+}
+h3
+{
+    margin-block-end: 0em;
+    height: fit-content;
+}
+
+    </style>
+    
+
+
+
+</head>
+<body>
+    
+    <div id="main">
+         <h2><p id="quote">
+             Do one thing every day that scares </p> </h2>
+             <h3><p id="author"> roosevelt </p></h3> 
+                
+         <button id="btn">New Quotes</button> 
+         <button id="button_2" >Tweet me</button>
+    </div>
+</body>
+<script>
+    var real_data=""
+    var btn = document.querySelector("#btn")
+    var button_2 = document.querySelector("#button_2")
+    var number = ""
+    const get_new_Quotes = ()=>{
+        number  = Math.floor(Math.random()*1643)
+        console.log(number)
+        document.getElementById("quote").innerHTML = real_data[number].text
+       
+        if(real_data[number].author == null){
+            document.getElementById("author").innerHTML = "by unknown"
+        }
+        else{
+            document.getElementById("author").innerHTML = real_data[number].author
+        }
+
+        
+    }
+    const get_Quotes = async()=>{
+        try
+        {const api = "https://type.fit/api/quotes"
+        var data =   await fetch(api)
+        real_data = await data.json()
+        console.log(real_data[0].author) 
+        get_new_Quotes()
+       
+
+    }
+
+    
+    
+    
+    catch(err){
+        console.log(err.message)
+    }
+        
+    }
+
+    
+   
+
+    const tweet_me = ()=>{
+        var t = ` https://twitter.com/intent/tweet?text=${real_data[number].text} \n By ${real_data[number].author} `
+        window.open(t)
+    }
+
+
+    btn.addEventListener("click" , get_new_Quotes);
+    button_2.addEventListener("click" , tweet_me);
+    get_Quotes()
+
+</script>
+</html>
